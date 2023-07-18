@@ -1,0 +1,43 @@
+<section>
+  <div class="href-target" id="input-types"></div>
+  <h1>
+    Customers list
+  </h1>
+
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Sex</th>
+        <th>Add</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers; let i = index">
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.description }}</td>
+        <td>{{ customer.sex }}</td>
+        <td>
+          <div class="nice-form-group">
+            <input type="button" value="Add" (click)="add()" />
+          </div>
+        </td>
+        <td>
+          <div class="nice-form-group">
+            <input type="button" value="Edit" (click)="edit(i)" />
+          </div>
+        </td>
+        <td>
+          <div class="nice-form-group">
+            <input type="button" value="Delete" (click)="delete(i)" />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</section>

@@ -1,0 +1,31 @@
+<section>
+  <div class="href-target" id="input-types"></div>
+  <h1>
+    {{editState}} customer
+  </h1>
+  <form [formGroup]="editForm">
+    <div class="nice-form-group">
+      <label>Name</label>
+      <input type="text" placeholder="Your Name" formControlName="name" />
+      <div [innerHTML]="validate('name')" class="text-danger"></div>
+    </div>
+
+    <div class="nice-form-group">
+      <label>Description</label>
+      <input type="text" placeholder="Your Description" formControlName="description" />
+      <div [innerHTML]="validate('description')" class="text-danger"></div>
+    </div>
+
+    <div class="nice-form-group">
+      <label>Sex</label>
+      <select id="sex" formControlName="sex">
+        <option *ngFor="let s of sex" [ngValue]="s">{{ s }}</option>
+      </select>
+      <div [innerHTML]="validate('sex')" class="text-danger"></div>
+    </div>
+
+    <div class="nice-form-group">
+      <input type="button" value="Save" (click)="saveData()" />
+    </div>
+    </form>
+</section>
