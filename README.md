@@ -15,19 +15,19 @@ And allows to see the basis concept in the frontend:
 
 Project contains next namespaces and organization modules:
 
-- [backend](./src/backend)
-Backend based on .NET Core WebAPI and uses service architecture principles for easy testing and team work
+- [Backend based on .NET Core WebAPI](./src/backend)
+Uses service architecture principles for easy testing and team work
 
-- [backend unit tests](./src/backend/tests)
-Backend based on .NET Core WebAPI 
+- [Backend unit tests](./src/backend/tests)
+Uses Autofixture and NUnit
 
-- [frontend](./src/frontend)
-Frontend based on Angular and uses service architecture principles for easy testing and team work
+- [Frontend based on Angular](./src/frontend)
+ Uses service architecture principles for easy testing and team work
 
-- [frontend unit tests](./src/frontend/sample.web/src/app/pages/customers/tests)
-Frontend unit tests on Angular
+- [Frontend unit tests](./src/frontend/sample.web/src/app/pages/customers/tests)
+Uses Karma and Jasmine
 
-- [solution items]()
+- [Solution items]()
 Logical folder to organize docker, circleci, git and other scripts
 
 
