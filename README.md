@@ -35,3 +35,5 @@ Logical folder to organize docker, circleci, git and other scripts
 
 1. Under the folder (./src/frontend/sample.web) perform `npm install`
 2. Run WebAPI project
+
+![Sample application](./src/asserts/sample.svg)
