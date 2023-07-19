@@ -4,6 +4,7 @@ using Sample.DAL;
 using Sample.DAL.Entities;
 using Sample.Models.Dtos;
 using Sample.Models.Responses;
+using Sample.Services.Exceptions;
 
 namespace Sample.Services;
 
@@ -34,120 +35,65 @@ public class CustomersService: ICustomersService
 
     public async Task<ResponseResultDto<IReadOnlyList<CustomerDto>>> GetAll()
     {
-        try
-        {
-            var entityList = await _dbContext.Customers.AsNoTracking().ToListAsync();
+        var entityList = await _dbContext.Customers.AsNoTracking().ToListAsync();
 
-            return new ResponseResultDto<IReadOnlyList<CustomerDto>>()
-            {
-                ResultItem = _mapper.Map<IReadOnlyList<CustomerDto>>(entityList)
-            };
-        }
-        catch (Exception e)
+        return new ResponseResultDto<IReadOnlyList<CustomerDto>>()
         {
-            return new ResponseResultDto<IReadOnlyList<CustomerDto>>()
-            {
-                ResultItem = Array.Empty<CustomerDto>(),
-                Error = e.Message
-            };
-        }
+            ResultItem = _mapper.Map<IReadOnlyList<CustomerDto>>(entityList)
+        };
     }
 
     public async Task<ResponseResultDto<CustomerDto>> GetByIdentity(int id)
     {
-        try
-        {
-            var entity = await GetCustomerById(id);
+        var entity = await GetCustomerById(id);
 
-            return new ResponseResultDto<CustomerDto>()
-            {
-                ResultItem = _mapper.Map<CustomerDto>(entity)
-            };
-        }
-        catch (Exception e)
+        return new ResponseResultDto<CustomerDto>()
         {
-            return new ResponseResultDto<CustomerDto>()
-            {
-                ResultItem = null!,
-                Error = e.Message
-            };
-        }
+            ResultItem = _mapper.Map<CustomerDto>(entity)
+        };
     }
 
     public async Task<ResponseResultDto<CustomerDto>> CreateNewItem(CustomerDto entityDto)
     {
-        try
-        {
-            var entity = _mapper.Map<CustomerEntity>(entityDto);
+        var entity = _mapper.Map<CustomerEntity>(entityDto);
 
-            await _dbContext.Customers.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+        await _dbContext.Customers.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
 
-            return new ResponseResultDto<CustomerDto>()
-            {
-                ResultItem = _mapper.Map<CustomerDto>(entity)
-            };
-        }
-        catch (Exception e)
+        return new ResponseResultDto<CustomerDto>()
         {
-            return new ResponseResultDto<CustomerDto>()
-            {
-                ResultItem = null!,
-                Error = e.Message
-            };
-        }
+            ResultItem = _mapper.Map<CustomerDto>(entity)
+        };
     }
 
     public async Task<ResponseResultDto<CustomerDto>> EditItem(CustomerDto entityDto, int id)
     {
-        try
+        var entity = await GetCustomerById(id);
+
+        _mapper.Map(entityDto, entity);
+
+        _dbContext.Customers.Update(entity);
+
+        await _dbContext.SaveChangesAsync();
+
+        return new ResponseResultDto<CustomerDto>()
         {
-            var entity = await GetCustomerById(id);
-
-            _mapper.Map(entityDto, entity);
-
-            _dbContext.Customers.Update(entity);
-                
-            await _dbContext.SaveChangesAsync();
-
-            return new ResponseResultDto<CustomerDto>()
-            {
-                ResultItem = _mapper.Map<CustomerDto>(entity)
-            };
-        }
-        catch (Exception e)
-        {
-            return new ResponseResultDto<CustomerDto>()
-            {
-                ResultItem = null!,
-                Error = e.Message
-            };
-        }
+            ResultItem = _mapper.Map<CustomerDto>(entity)
+        };
     }
 
     public async Task<ResponseResultDto<bool>> DeleteItem(int id)
     {
-        try
+        var entity = await GetCustomerById(id);
+
+        _dbContext.Customers.Remove(entity);
+
+        await _dbContext.SaveChangesAsync();
+
+        return new ResponseResultDto<bool>()
         {
-            var entity = await GetCustomerById(id);
-
-            _dbContext.Customers.Remove(entity);
-
-            await _dbContext.SaveChangesAsync();
-
-            return new ResponseResultDto<bool>()
-            {
-                ResultItem = true
-            };
-        }
-        catch (Exception e)
-        {
-            return new ResponseResultDto<bool>()
-            {
-                ResultItem = false,
-                Error = e.Message
-            };
-        }
+            ResultItem = true
+        };
     }
 
     private async Task<CustomerEntity> GetCustomerById(int id)
@@ -156,7 +102,7 @@ public class CustomersService: ICustomersService
 
         if (entity == null)
         {
-            throw new Exception($"Entity with {id} not found");
+            throw new NotFoundException($"Entity with {id} not found", null!);
         }
 
         return entity;

@@ -48,7 +48,6 @@ public class CustomersController : ControllerBase
     [Route("")]
     [HttpPost]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(ResponseResultDto<CustomerDto>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> Create([FromBody] CustomerDto customerDto)
@@ -61,7 +60,6 @@ public class CustomersController : ControllerBase
     [Route("")]
     [HttpGet]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(ResponseResultDto<IReadOnlyList<CustomerDto>>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> GetAll()

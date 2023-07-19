@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Sample.DAL;
 using Sample.Services.Mappings;
 using Sample.WebAPI;
+using Sample.WebAPI.Middleware.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.RegisterMiddleware();
 
 // Configure the HTTP request pipeline.
 
