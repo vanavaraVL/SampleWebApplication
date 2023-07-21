@@ -22,8 +22,8 @@ public class CustomersController : ControllerBase
     [Route("{id:int}")]
     [HttpDelete]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(ResponseResultDto<IReadOnlyList<bool>>), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseResultDto<bool>), StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> Delete(int id)
     {
@@ -35,8 +35,8 @@ public class CustomersController : ControllerBase
     [Route("{id:int}")]
     [HttpPut]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(ResponseResultDto<IReadOnlyList<CustomerDto>>), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseResultDto<CustomerDto>), StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> Edit([FromBody] CustomerDto customerDto, int id)
     {
@@ -48,7 +48,7 @@ public class CustomersController : ControllerBase
     [Route("")]
     [HttpPost]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseResultDto<CustomerDto>), StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> Create([FromBody] CustomerDto customerDto)
     {
@@ -60,7 +60,7 @@ public class CustomersController : ControllerBase
     [Route("")]
     [HttpGet]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseResultDto<IReadOnlyList<CustomerDto>>), StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> GetAll()
     {
@@ -72,8 +72,8 @@ public class CustomersController : ControllerBase
     [Route("{id:int}")]
     [HttpGet]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(ResponseResultDto<CustomerDto>), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseResultDto<CustomerDto>), StatusCodes.Status200OK)]
     [EnableCors]
     public async Task<IActionResult> GetById(int id)
     {
